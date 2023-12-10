@@ -3,6 +3,7 @@ import {
   generateAdminId,
   generateManagementId,
   generateStudentId,
+  generateTeacherId,
 } from '../../../helpers/genarateUserId'
 import { IUsers } from './users.interface'
 import { Users } from './users.model'
@@ -35,6 +36,8 @@ const createUser = async (data: IUsers): Promise<IUsers | null | object> => {
       data.userId = await generateAdminId()
     } else if (data.role === ENUM_USER_ROLE.MANAGEMENT) {
       data.userId = await generateManagementId()
+    } else if (data.role === ENUM_USER_ROLE.TEACHER) {
+      data.userId = await generateTeacherId()
     }
 
     // Create User
@@ -46,6 +49,8 @@ const createUser = async (data: IUsers): Promise<IUsers | null | object> => {
     throw new Error('Error creating user')
   }
 }
+
+// Get All Users
 
 export const usersService = {
   createUser,

@@ -21,3 +21,10 @@ export const generateAdminId = async () => {
   let id = totalUser ? `A-000${totalUser.length + 1}` : 'A-00001'
   return id
 }
+
+// Teacher Id
+export const generateTeacherId = async () => {
+  const totalUser = await Users.find({ role: ENUM_USER_ROLE.TEACHER })
+  let id = totalUser ? `T-000${totalUser.length + 1}` : 'T-00001'
+  return id
+}
