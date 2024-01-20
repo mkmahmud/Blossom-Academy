@@ -1,20 +1,4 @@
-import { Model } from 'mongoose'
-
-export interface IUsers {
-  fullName: string
-  userId: string
-  email: string
-  password: string
-  role: string
-}
-
-export type UsersModel = {
-  isUserExist(id: string): Promise<Pick<IUsers, 'userId' | 'password' | 'role'>>
-  isPasswordMatched(
-    givenPassword: string,
-    savedPassword: string,
-  ): Promise<boolean>
-} & Model<IUsers>
+import { Model, Types } from 'mongoose'
 
 export interface ISocialProfile {
   facebook?: string
@@ -54,10 +38,9 @@ export interface ICareer {
   ]
 }
 
-export interface IUserDetails {
+export interface ITeacher {
   userId: string
   id: string
-  role: string
   firstName?: string
   lastName?: string
   bio?: string
@@ -73,4 +56,4 @@ export interface IUserDetails {
   career?: ICareer
 }
 
-export type UserDetailsModel = Model<IUserDetails>
+export type TeacherModel = Model<ITeacher>

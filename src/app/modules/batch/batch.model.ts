@@ -6,18 +6,21 @@ const batchSchema = new Schema<IBatch>({
     type: String,
     required: true,
   },
-  studentsId: {
-    type: [Types.ObjectId],
-    required: true,
-  },
-  teachersId: {
-    type: [Types.ObjectId],
-    required: true,
-  },
-  courseId: {
-    type: [Types.ObjectId],
-    required: true,
-  },
+  studentsId: [
+    {
+      id: { type: Schema.Types.ObjectId, ref: 'users' },
+    },
+  ],
+  teachersId: [
+    {
+      id: { type: Schema.Types.ObjectId, ref: 'users' },
+    },
+  ],
+  courseId: [
+    {
+      id: { type: Schema.Types.ObjectId, ref: 'courses' },
+    },
+  ],
   startTime: {
     type: String,
     required: true,
@@ -27,6 +30,14 @@ const batchSchema = new Schema<IBatch>({
     required: true,
   },
   category: {
+    type: String,
+    required: true,
+  },
+  thambnail: {
+    type: String,
+    required: true,
+  },
+  session: {
     type: String,
     required: true,
   },

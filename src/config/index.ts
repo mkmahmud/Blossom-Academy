@@ -16,4 +16,8 @@ export default {
   JWT_REFRESH_EXPIRES_IN: process.env.JWT_REFRESH_EXPIRES_IN,
   // Bycrpt
   saltRounds: process.env.BCRYPT_SALT_ROUNDS,
+  // SSL
+  storeId: process.env.SSL_STORE_ID,
+  storePassword: process.env.SSL_STORE_PASSWORD,
+  paymentURL: process.env.SSL_URL,
 }

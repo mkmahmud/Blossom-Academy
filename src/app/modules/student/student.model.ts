@@ -1,73 +1,12 @@
-import { Schema, model } from 'mongoose'
-import {
-  IUserDetails,
-  IUsers,
-  UserDetailsModel,
-  UsersModel,
-} from './users.interface'
-import bcrypt from 'bcrypt'
+import { Schema, Types, model } from 'mongoose'
+import { IStudent, StudentModel } from './student.Interface'
 
-// User Modal
-const usersSchema = new Schema<IUsers, UsersModel>(
-  {
-    fullName: {
-      type: String,
-      required: true,
-    },
-    userId: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    role: {
-      type: String,
-      required: true,
-    },
-  },
-  {
-    timestamps: true,
-    toJSON: {
-      virtuals: true,
-    },
-  },
-)
-
-// Check user exists
-usersSchema.statics.isUserExist = async function (
-  userId: string,
-): Promise<IUsers | null> {
-  return await Users.findOne({ userId }, { userId: 1, password: 1, role: 1 })
-}
-
-// Check user password
-usersSchema.statics.isPasswordMatched = async function (
-  givenPassword: string,
-  savedPassword: string,
-): Promise<boolean> {
-  return await bcrypt.compare(givenPassword, savedPassword)
-}
-
-export const Users = model<IUsers, UsersModel>('users', usersSchema)
-
-// User Details
-
-const userDetailsSchema = new Schema<IUserDetails>({
+const studentsSchema = new Schema<IStudent>({
   id: { type: String, required: true },
   firstName: {
     type: String,
   },
   userId: {
-    type: String,
-    required: true,
-  },
-  role: {
     type: String,
     required: true,
   },
@@ -91,12 +30,6 @@ const userDetailsSchema = new Schema<IUserDetails>({
     type: String,
   },
   city: {
-    type: String,
-  },
-  bio: {
-    type: String,
-  },
-  profileImage: {
     type: String,
   },
   zipCode: {
@@ -129,9 +62,6 @@ const userDetailsSchema = new Schema<IUserDetails>({
           institution: {
             type: String,
           },
-          title: {
-            type: String,
-          },
           location: {
             type: String,
           },
@@ -152,9 +82,6 @@ const userDetailsSchema = new Schema<IUserDetails>({
       experience: [
         {
           institution: {
-            type: String,
-          },
-          title: {
             type: String,
           },
           location: {
@@ -182,7 +109,7 @@ const userDetailsSchema = new Schema<IUserDetails>({
   ],
 })
 
-export const UserDetails = model<IUserDetails, UserDetailsModel>(
-  'user-details',
-  userDetailsSchema,
+export const Students = model<IStudent, StudentModel>(
+  'students',
+  studentsSchema,
 )
