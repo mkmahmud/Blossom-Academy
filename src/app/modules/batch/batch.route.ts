@@ -41,6 +41,17 @@ router.post(
   batchController.addStudentIntoBatch,
 )
 
+// Update Batch Status
+router.patch(
+  '/update-batch-status',
+  auth(
+    ENUM_USER_ROLE.MANAGEMENT,
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.SUPER_ADMIN,
+  ),
+  batchController.updateBatchStatus,
+)
+
 // Add teacher
 router.post(
   '/add-teacher',

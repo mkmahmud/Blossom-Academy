@@ -11,6 +11,7 @@ import { IUserDetails, IUsers } from './users.interface'
 import { UserDetails, Users } from './users.model'
 import bcrypt from 'bcrypt'
 import { Students } from '../student/student.model'
+import nodemailer from 'nodemailer'
 
 // Create User
 const createUser = async (data: IUsers): Promise<IUsers | null | object> => {
@@ -52,17 +53,55 @@ const createUser = async (data: IUsers): Promise<IUsers | null | object> => {
       const user = await Users.create([data], { session })
 
       if (user) {
+        const inputString = user[0].fullName
+        const fullNameString = inputString.split(' ')
+
+        // Extract the first Name
+        const firstName = fullNameString[0]
+
+        // Extract the Last
+        const lastName = fullNameString.slice(1).join(' ')
+
         const detailsData = {
           id: user[0]._id,
           userId: user[0].userId,
           email: user[0].email,
           role: user[0].role,
+          firstName: firstName,
+          lastName: lastName,
         }
 
         await UserDetails.create([detailsData], { session })
 
         await session.commitTransaction()
         session.endSession()
+
+        // Configure User data
+        const userInfoEmail = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 587,
+          secure: false,
+          auth: {
+            user: 'nurul.dev.mern@gmail.com',
+            pass: 'rnqh snjf wvyy qlfz',
+          },
+        })
+
+        const mailOptions = {
+          from: 'nurul.dev.mern@gmail.com',
+          to: user[0]?.email,
+          subject: 'Blossom Account Information',
+          text: `Hello ${user[0]?.fullName} . Your User Id is ${user[0]?.userId}`,
+        }
+
+        userInfoEmail.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.log(error)
+          } else {
+            console.log('email sent sucssfully')
+          }
+        })
+
         return { message: 'Success' }
       } else {
         return { message: 'Failed' }

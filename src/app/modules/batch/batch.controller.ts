@@ -32,6 +32,21 @@ const getBatch = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+// Update Batch Status
+const updateBatchStatus = catchAsync(async (req: Request, res: Response) => {
+  const { id, status } = req.query
+
+  const result = await BatchService.updateBatchStatus(id, status)
+
+  // Send response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Batch Data Updated Successfully',
+    data: result,
+  })
+})
+
 // Add Student inTo batch
 const addStudentIntoBatch = catchAsync(async (req: Request, res: Response) => {
   const studentId = req.query.studentId as string
@@ -109,6 +124,7 @@ const getAllActiveBatch = catchAsync(async (req: Request, res: Response) => {
 export const batchController = {
   createBatch,
   getBatch,
+  updateBatchStatus,
   addStudentIntoBatch,
   addTeacherIntoBatch,
   addCourseIntoBatch,

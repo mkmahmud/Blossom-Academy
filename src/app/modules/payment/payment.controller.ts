@@ -18,6 +18,21 @@ const initPayment = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+// Validate payment webhook
+const webHook = catchAsync(async (req: Request, res: Response) => {
+  const payload = req.query
+  const result = await PaymentService.webHook(payload)
+
+  // Send response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Payment Validated Successfully',
+    data: result,
+  })
+})
+
 export const PaymentController = {
   initPayment,
+  webHook,
 }

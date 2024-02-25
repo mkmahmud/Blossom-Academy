@@ -2,6 +2,7 @@ import { Ipayment } from './payment.interface'
 import { Payments } from './payment.model'
 import { sslPayments } from './ssl/sslPayment'
 
+// Init Payment
 const initPayment = async (data: Ipayment): Promise<Object | String> => {
   const userData = {
     total_amount: data.amount,
@@ -20,6 +21,32 @@ const initPayment = async (data: Ipayment): Promise<Object | String> => {
   return paymentInit
 }
 
+// Valdiate Payment Webhook
+const webHook = async (data: any) => {
+  if (!data) {
+    return {
+      message: 'invalid payment',
+    }
+  }
+  const result = await sslPayments.validate(data)
+  // console.log(result)
+  // if (result?.status !== 'VALID') {
+  //   return {
+  //     message: 'payment Failed',
+  //   }
+  // }
+  // const { tran_id } = result
+  // await Payments.findOneAndUpdate(
+  //   { tranID: tran_id },
+  //   {
+  //     status: true,
+  //   },
+  // )
+  // console.log(result)
+  return result
+}
+
 export const PaymentService = {
   initPayment,
+  webHook,
 }

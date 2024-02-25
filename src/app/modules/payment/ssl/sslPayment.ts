@@ -9,7 +9,8 @@ const sslPaymentInit = async (d: any) => {
       total_amount: d.total_amount,
       currency: 'BDT',
       tran_id: d.tran_id, // use unique tran_id for each api call
-      success_url: 'http://localhost:3000/live-courses',
+      success_url:
+        'https://blossom-academy.netlify.app/courses/checkout/success',
       fail_url: 'http://localhost:3030/fail',
       cancel_url: 'http://localhost:3030/cancel',
       ipn_url: 'http://localhost:3030/ipn',
@@ -50,6 +51,21 @@ const sslPaymentInit = async (d: any) => {
   }
 }
 
+// Validate payment
+const validate = async (data: any) => {
+  try {
+    const res = await axios({
+      method: 'GET',
+      url: `${config.validateURL}?val_id=${data.val_id}&store_id=${config.storeId}&store_passwd=${config.storePassword}&format=json`,
+    })
+
+    return res.data
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const sslPayments = {
   sslPaymentInit,
+  validate,
 }

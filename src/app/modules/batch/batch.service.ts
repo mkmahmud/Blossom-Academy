@@ -25,6 +25,24 @@ const getBatch = async (id: string): Promise<IBatch | null | any> => {
   }
 }
 
+// Update Batch Status
+const updateBatchStatus = async (
+  id: any,
+  status: any,
+): Promise<IBatch | null | any> => {
+  try {
+    const batch = await Batch.findOneAndUpdate(
+      { _id: id },
+      { $set: { status: status } },
+      { new: true, useFindAndModify: false },
+    )
+
+    return batch
+  } catch (error) {
+    console.error('Error getting batch with populated fields:', error)
+    return null
+  }
+}
 // GEt  All Batch
 const getAllBatch = async (): Promise<IBatch | null | any> => {
   try {
@@ -78,7 +96,7 @@ const addStudentIntoBatch = async (
 
     // If the studentId does not exist, add it to the studentsId array
     if (!studentExists) {
-      batch.studentsId.push({ id: new Types.ObjectId(studentId).toString() })
+      batch.studentsId.push({ id: new Types.ObjectId(studentId) })
 
       // Save the updated batch
       await batch.save()
@@ -115,7 +133,7 @@ const addTeacherIntoBatch = async (
 
   // If the teacherId does not exist, add it to the teachersId array
   if (!teacherExists) {
-    batch.teachersId.push({ id: new Types.ObjectId(teacherId).toString() })
+    batch.teachersId.push({ id: new Types.ObjectId(teacherId) })
 
     // Save the updated batch
     await batch.save()
@@ -148,7 +166,7 @@ const addCourseIntoBatch = async (
 
   // If the teacherId does not exist, add it to the teachersId array
   if (!courseExist) {
-    batch.courseId.push({ id: new Types.ObjectId(courseId).toString() })
+    batch.courseId.push({ id: new Types.ObjectId(courseId) })
 
     // Save the updated batch
     await batch.save()
@@ -163,6 +181,7 @@ const addCourseIntoBatch = async (
 export const BatchService = {
   createBatch,
   getBatch,
+  updateBatchStatus,
   addStudentIntoBatch,
   addTeacherIntoBatch,
   addCourseIntoBatch,

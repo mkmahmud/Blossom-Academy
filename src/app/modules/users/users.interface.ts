@@ -1,6 +1,7 @@
 import { Model } from 'mongoose'
 
 export interface IUsers {
+  _id?: string
   fullName: string
   userId: string
   email: string
@@ -9,7 +10,9 @@ export interface IUsers {
 }
 
 export type UsersModel = {
-  isUserExist(id: string): Promise<Pick<IUsers, 'userId' | 'password' | 'role'>>
+  isUserExist(
+    id: string,
+  ): Promise<Pick<IUsers, 'userId' | 'password' | 'role' | '_id'>>
   isPasswordMatched(
     givenPassword: string,
     savedPassword: string,
@@ -71,6 +74,7 @@ export interface IUserDetails {
   zipCode?: number
   socialProfile?: ISocialProfile
   career?: ICareer
+  skills?: [{ index: number; title: string }]
 }
 
 export type UserDetailsModel = Model<IUserDetails>

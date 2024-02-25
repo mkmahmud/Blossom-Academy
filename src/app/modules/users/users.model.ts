@@ -102,6 +102,8 @@ const userDetailsSchema = new Schema<IUserDetails>({
   zipCode: {
     type: String,
   },
+  skills: [{ index: Number, title: String }],
+
   socialProfile: [
     {
       facebook: {
