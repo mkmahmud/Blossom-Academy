@@ -111,7 +111,6 @@ const addStudentIntoBatch = async (
 }
 
 // Add Teacher Into the batch
-
 const addTeacherIntoBatch = async (
   teacherId: string,
   batchId: string,
@@ -178,6 +177,19 @@ const addCourseIntoBatch = async (
   return updatedBatch
 }
 
+// Get If Student enrolled Batch
+const studentEnrolledBatch = async (
+  studentId: string,
+): Promise<IBatch | null | string | any> => {
+  const batch = await Batch.find({ 'studentsId.id': studentId })
+    .populate('studentsId.id', 'email fullName')
+    .populate('teachersId.id', 'email fullName')
+    .populate('courseId.id', 'title code')
+    .exec()
+
+  return batch
+}
+
 export const BatchService = {
   createBatch,
   getBatch,
@@ -187,4 +199,5 @@ export const BatchService = {
   addCourseIntoBatch,
   getAllBatch,
   getAllActiveBatch,
+  studentEnrolledBatch,
 }

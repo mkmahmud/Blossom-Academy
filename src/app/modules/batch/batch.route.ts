@@ -74,6 +74,9 @@ router.post(
   batchController.addCourseIntoBatch,
 )
 
+// Get student Enrolled  Bacth
+router.get('/enrolled-student/:id', batchController.getStudentEnrolledBatches)
+
 // Get All Bacth
 router.get('/', batchController.getAllBatch)
 

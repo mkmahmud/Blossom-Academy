@@ -121,6 +121,22 @@ const getAllActiveBatch = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+// Get Student Enrolled Batches
+const getStudentEnrolledBatches = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params
+    const result = await BatchService.studentEnrolledBatch(id)
+
+    // Send response
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Students Batch data Retrieved Successfully',
+      data: result,
+    })
+  },
+)
+
 export const batchController = {
   createBatch,
   getBatch,
@@ -130,4 +146,5 @@ export const batchController = {
   addCourseIntoBatch,
   getAllBatch,
   getAllActiveBatch,
+  getStudentEnrolledBatches,
 }
