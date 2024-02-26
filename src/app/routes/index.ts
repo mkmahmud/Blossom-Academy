@@ -6,6 +6,7 @@ import { batchRoutes } from '../modules/batch/batch.route'
 import { TeachersRoutes } from '../modules/teacher/teacher.route'
 import { StudentsRoutes } from '../modules/student/student.route'
 import { PaymentsRoutes } from '../modules/payment/payment.route'
+import { NewsLatterRoutes } from '../modules/newslatter/newslatter.route'
 const routes = express.Router()
 
 // Routes
@@ -37,6 +38,10 @@ const Routers = [
   {
     path: '/payments',
     route: PaymentsRoutes,
+  },
+  {
+    path: '/newslatter',
+    route: NewsLatterRoutes,
   },
 ]
 
