@@ -17,6 +17,32 @@ const createNotification = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+
+// Create Multiple Notification
+const createMultipleNotification = catchAsync(
+  async (req: Request, res: Response) => {
+    const body = req.body
+    const result = body.id.map(async (i: any) => {
+      const finalData = {
+        status: body.status,
+        content: body.content,
+        link: body.link,
+        receiver: i,
+      }
+
+      await NotificationService.createNotification(finalData)
+    })
+
+    // Send response
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Notification Sent Successfully',
+      data: body,
+    })
+  },
+)
+
 // Get Notification
 const getNotifications = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params
@@ -31,8 +57,24 @@ const getNotifications = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+// Update Notification
+const updateNotifications = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params
+  const result = await NotificationService.updateNotifications(id)
+
+  // Send response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Notification Updated Successfully',
+    data: result,
+  })
+})
+
 // Export functions
 export const NotificationController = {
   createNotification,
   getNotifications,
+  updateNotifications,
+  createMultipleNotification,
 }

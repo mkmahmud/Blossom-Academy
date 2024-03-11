@@ -49,6 +49,7 @@
     "nodemailer": "^6.9.10",
     "nodemon": "^3.0.1",
     "save-dev": "^0.0.1-security",
+    "socket.io": "^4.7.4",
     "zod": "^3.22.4"
   }
 }

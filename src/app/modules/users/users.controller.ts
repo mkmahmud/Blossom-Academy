@@ -104,6 +104,22 @@ const getSingleUserDetails = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+// getSingleUser Details by Id
+const getSingleUserDetailsbyId = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params
+    const result = await usersService.getSingleUserDetailsById(id)
+
+    // Send response
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'User Data Retrived Successfully',
+      data: result,
+    })
+  },
+)
+
 export const usersController = {
   createUser,
   getUser,
@@ -112,4 +128,5 @@ export const usersController = {
   updateUserDetails,
   getAllUsersDetailsByRole,
   getSingleUserDetails,
+  getSingleUserDetailsbyId,
 }

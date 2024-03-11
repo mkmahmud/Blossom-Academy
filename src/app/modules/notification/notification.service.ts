@@ -15,8 +15,21 @@ const getNotifications = async (id: string): Promise<INotification | any> => {
   return res
 }
 
+// Update Notifications Status
+const updateNotifications = async (
+  id: string,
+): Promise<INotification | any> => {
+  const res = await Notification.findOneAndUpdate(
+    { _id: id },
+    { $set: { status: false } },
+    { new: true, useFindAndModify: false },
+  )
+  return res
+}
+
 //
 export const NotificationService = {
   createNotification,
   getNotifications,
+  updateNotifications,
 }

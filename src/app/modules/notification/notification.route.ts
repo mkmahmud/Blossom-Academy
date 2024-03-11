@@ -16,6 +16,20 @@ router.post(
   NotificationController.createNotification,
 )
 
+// Create Notification
+router.post(
+  '/multiple',
+  auth(
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.MANAGEMENT,
+  ),
+  NotificationController.createMultipleNotification,
+)
+
+// Update Notifications
+router.patch('/:id', NotificationController.updateNotifications)
+
 // Get Notifications
 router.get('/:id', NotificationController.getNotifications)
 

@@ -179,6 +179,12 @@ const getSingleUserDetails = async (id: any) => {
   return res
 }
 
+// Get Single User Details By Id
+const getSingleUserDetailsById = async (id: any) => {
+  const res = await UserDetails.findOne({ userId: id })
+  return res
+}
+
 export const usersService = {
   createUser,
   getUser,
@@ -187,4 +193,5 @@ export const usersService = {
   updateUserDetails,
   getAllUsersDetailsByRole,
   getSingleUserDetails,
+  getSingleUserDetailsById,
 }

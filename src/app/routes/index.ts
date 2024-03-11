@@ -8,6 +8,7 @@ import { StudentsRoutes } from '../modules/student/student.route'
 import { PaymentsRoutes } from '../modules/payment/payment.route'
 import { NewsLatterRoutes } from '../modules/newslatter/newslatter.route'
 import { NotificationRoutes } from '../modules/notification/notification.route'
+import { MessengerRoute } from '../modules/messenger/messenger.route'
 const routes = express.Router()
 
 // Routes
@@ -47,6 +48,10 @@ const Routers = [
   {
     path: '/notification',
     route: NotificationRoutes,
+  },
+  {
+    path: '/messenger',
+    route: MessengerRoute,
   },
 ]
 

@@ -61,4 +61,10 @@ router.get('/:id', usersController.getUser)
 // getSingleUser Details
 router.get('/getSingleUserDetails/:id', usersController.getSingleUserDetails)
 
+// getSingleUser Details By Id
+router.get(
+  '/getSingleUserDetailsById/:id',
+  usersController.getSingleUserDetailsbyId,
+)
+
 export const UserRoutes = router

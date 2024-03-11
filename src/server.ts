@@ -1,14 +1,15 @@
-// getting-started.js
-import mongoose = require('mongoose')
+import mongoose from 'mongoose'
 import app from './app'
-import { Server } from 'http'
+import { createServer } from 'http' // Import http module
 import config from './config'
+import { initializeSocket } from './socket'
 
 process.on('uncaughtException', err => {
-  console.log('Uncaught exception is detction ......', err)
+  console.log('Uncaught exception is detected......', err)
   process.exit(1)
 })
-let server: Server
+
+let server: any
 
 async function main() {
   // server close
@@ -16,7 +17,15 @@ async function main() {
   try {
     await mongoose.connect(config.SERVER_URL as string)
     console.log('database connected')
-    server = app.listen(config.PORT, () => {
+
+    // Create HTTP server and attach the Express app
+    server = createServer(app)
+
+    // Initialize Socket.IO
+    const io = initializeSocket(server)
+
+    // Server
+    server.listen(config.PORT, () => {
       console.log(`Example app listening on port ${config.PORT}`)
     })
   } catch (err) {
@@ -24,8 +33,7 @@ async function main() {
   }
 
   process.on('unhandledRejection', err => {
-    // eslint-disable-next-line no-console
-    console.log('unhandel rejection is dected   So we are closing Our service')
+    console.log('unhandled rejection is detected. Closing the service...')
     if (server) {
       server.close(() => {
         console.log(err)
@@ -38,8 +46,9 @@ async function main() {
 }
 
 main()
+
 process.on('SIGTERM', () => {
-  console.log('SINGTERM is recived')
+  console.log('SIGTERM is received')
   if (server) {
     server.close()
   }

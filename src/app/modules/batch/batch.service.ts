@@ -13,8 +13,8 @@ const createBatch = async (data: IBatch): Promise<IBatch> => {
 const getBatch = async (id: string): Promise<IBatch | null | any> => {
   try {
     const batch = await Batch.findById(id)
-      .populate('studentsId.id', 'email fullName')
-      .populate('teachersId.id', 'email fullName')
+      .populate('studentsId.id', 'email fullName userId')
+      .populate('teachersId.id', 'email fullName userId')
       .populate('courseId.id', 'title code')
       .exec()
 
@@ -47,8 +47,8 @@ const updateBatchStatus = async (
 const getAllBatch = async (): Promise<IBatch | null | any> => {
   try {
     const batch = await Batch.find({})
-      .populate('studentsId.id', 'email fullName')
-      .populate('teachersId.id', 'email fullName')
+      .populate('studentsId.id', 'email fullName userId')
+      .populate('teachersId.id', 'email fullName userId')
       .populate('courseId.id', 'title code')
       .exec()
 
