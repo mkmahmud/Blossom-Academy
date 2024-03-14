@@ -5,6 +5,9 @@ const router = express.Router()
 // Init PAyment
 router.post('/init', PaymentController.initPayment)
 
+// Validate And Update Payment Status
+router.post('/validate-and-update', PaymentController.validateAndUpdate)
+
 // Validate Payment webHook
 router.post('/webhook', PaymentController.webHook)
 

@@ -13,6 +13,7 @@ export interface Ipayment {
   tranID: string
   courseId: string
   email: string
+  courseName: string
 }
 
 export type PaymentModel = Model<Ipayment>

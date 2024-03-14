@@ -18,6 +18,20 @@ const initPayment = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+// validateAndUpdate
+const validateAndUpdate = catchAsync(async (req: Request, res: Response) => {
+  const data = req.body
+  const result = await PaymentService.validateAndUpdate(data)
+
+  // Send response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Payment Updated Successfully',
+    data: result,
+  })
+})
+
 // Validate payment webhook
 const webHook = catchAsync(async (req: Request, res: Response) => {
   const payload = req.query
@@ -35,4 +49,5 @@ const webHook = catchAsync(async (req: Request, res: Response) => {
 export const PaymentController = {
   initPayment,
   webHook,
+  validateAndUpdate,
 }

@@ -35,6 +35,10 @@ const paymentSchema = new Schema<Ipayment>({
     type: String,
     required: true,
   },
+  courseName: {
+    type: String,
+    required: true,
+  },
   method: {
     type: String,
     required: true,

@@ -21,4 +21,6 @@ export default {
   storePassword: process.env.SSL_STORE_PASSWORD,
   paymentURL: process.env.SSL_URL,
   validateURL: process.env.SSL_VALIDATION,
+  // Stripe
+  stripeSecret: process.env.STRIPE_SECRET_URL,
 }
