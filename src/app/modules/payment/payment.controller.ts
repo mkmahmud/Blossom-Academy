@@ -46,8 +46,22 @@ const webHook = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+// Get All Ordes
+const getAllOrders = catchAsync(async (req: Request, res: Response) => {
+  const result = await PaymentService.getAllOrders()
+
+  // Send response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Orders Data Retrived Successfully',
+    data: result,
+  })
+})
+
 export const PaymentController = {
   initPayment,
   webHook,
   validateAndUpdate,
+  getAllOrders,
 }

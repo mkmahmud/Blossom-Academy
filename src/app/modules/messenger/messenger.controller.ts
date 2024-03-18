@@ -4,7 +4,7 @@ import sendResponse from '../../../shared/sendResponse'
 import httpStatus from 'http-status'
 import { MessengerService } from './messenger.service'
 
-// Create Course
+// Engaged Users
 const GetMessages = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params
   const result = await MessengerService.getAllEngagedUsers(id)
@@ -34,6 +34,37 @@ const addNewUserIntoContact = catchAsync(
   },
 )
 
+// Get All Messages
+const getAllMessages = catchAsync(async (req: Request, res: Response) => {
+  const { sender, reciver } = req.query
+
+  // @ts-ignore
+  const result = await MessengerService.getAllMessages(sender, reciver)
+
+  // Send response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Messages Retrived Successfully',
+    data: result,
+  })
+})
+
+// Insert Message
+
+const insertMessage = catchAsync(async (req: Request, res: Response) => {
+  const data = req.body
+  const result = await MessengerService.InsertMessage(data)
+
+  // Send response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Messages Retrived Successfully',
+    data: result,
+  })
+})
+
 // Get my contact
 const getMyContact = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params
@@ -52,5 +83,7 @@ const getMyContact = catchAsync(async (req: Request, res: Response) => {
 export const MessengerController = {
   GetMessages,
   addNewUserIntoContact,
+  getAllMessages,
   getMyContact,
+  insertMessage,
 }

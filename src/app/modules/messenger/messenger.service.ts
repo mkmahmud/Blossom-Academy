@@ -10,15 +10,15 @@ const InsertMessage = async (data: IMessenger): Promise<IMessenger> => {
 }
 
 // Get Messages
-const getMessages = async (data: any) => {
+const getAllMessages = async (sender: string, reciver: string) => {
   const messagesSent = await Messenger.find({
-    sender: data.senderid,
-    reciver: data.reciverId,
+    sender,
+    reciver,
   })
 
   const messagesReceived = await Messenger.find({
-    sender: data.reciverId,
-    reciver: data.senderid,
+    sender: reciver,
+    reciver: sender,
   })
 
   const combinedMessages = [...messagesSent, ...messagesReceived]
@@ -56,7 +56,7 @@ const getMyContact = async (id: string) => {
 
 export const MessengerService = {
   InsertMessage,
-  getMessages,
+  getAllMessages,
   getAllEngagedUsers,
   addNewUserIntoMyContact,
   getMyContact,

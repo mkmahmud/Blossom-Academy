@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 import app from './app'
 import { createServer } from 'http' // Import http module
 import config from './config'
-import { initializeSocket } from './socket'
 
 process.on('uncaughtException', err => {
   console.log('Uncaught exception is detected......', err)
@@ -20,9 +19,6 @@ async function main() {
 
     // Create HTTP server and attach the Express app
     server = createServer(app)
-
-    // Initialize Socket.IO
-    const io = initializeSocket(server)
 
     // Server
     server.listen(config.PORT, () => {

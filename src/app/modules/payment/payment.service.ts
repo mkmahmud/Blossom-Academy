@@ -85,8 +85,16 @@ const webHook = async (data: any) => {
   return result
 }
 
+// Get All Orders
+const getAllOrders = async (): Promise<Object | String> => {
+  // Check if payment valid or not
+  const checkPayment = await Payments.find({})
+  return checkPayment
+}
+
 export const PaymentService = {
   initPayment,
   webHook,
   validateAndUpdate,
+  getAllOrders,
 }
