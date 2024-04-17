@@ -25,6 +25,13 @@ router.get(
   usersController.getTeachers,
 )
 
+// getUserGrowth
+router.get(
+  '/user-growth',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  usersController.getUserGrowth,
+)
+
 // Get Students
 router.get(
   '/students',
@@ -47,6 +54,19 @@ router.patch(
     ENUM_USER_ROLE.SUPER_ADMIN,
   ),
   usersController.updateUserDetails,
+)
+
+//  Change Password
+router.patch(
+  '/change-password/:id',
+  auth(
+    ENUM_USER_ROLE.TEACHER,
+    ENUM_USER_ROLE.STUDENT,
+    ENUM_USER_ROLE.MANAGEMENT,
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.SUPER_ADMIN,
+  ),
+  usersController.changePassword,
 )
 
 // getAllUsers Details By Role

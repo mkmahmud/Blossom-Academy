@@ -9,7 +9,14 @@ const insertNewslatterEmail = async (
   return res
 }
 
+// GEt All email
+const getAllEmail = async () => {
+  const res = await NewsLatter.find({})
+  return res
+}
+
 //
 export const NewsLatterService = {
   insertNewslatterEmail,
+  getAllEmail,
 }

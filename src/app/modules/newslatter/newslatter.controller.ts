@@ -20,7 +20,21 @@ const insertNewslatterEmail = catchAsync(
   },
 )
 
+// Create Course
+const getAllEmail = catchAsync(async (req: Request, res: Response) => {
+  const result = await NewsLatterService.getAllEmail()
+
+  // Send response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Email Data Retived Successfully',
+    data: result,
+  })
+})
+
 // Export functions
 export const NewsLatterController = {
   insertNewslatterEmail,
+  getAllEmail,
 }

@@ -32,6 +32,19 @@ const getUser = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+// Get getUserGrowth
+const getUserGrowth = catchAsync(async (req: Request, res: Response) => {
+  const result = await usersService.getUserGrowth()
+
+  // Send response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User Data Retrived Successfully',
+    data: result,
+  })
+})
+
 // Get Teachers
 const getTeachers = catchAsync(async (req: Request, res: Response) => {
   const result = await usersService.getTeachers()
@@ -120,13 +133,33 @@ const getSingleUserDetailsbyId = catchAsync(
   },
 )
 
+// Update User Password
+const changePassword = async (req: Request, res: Response) => {
+  const { id: UpdatedId } = req.params
+  const UpdatedData = req.body
+  // Update User Password
+  const result = await usersService.changePassword({
+    id: UpdatedId,
+    data: UpdatedData,
+  })
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    data: result,
+    message: 'Password Updated Successfully',
+  })
+}
+
 export const usersController = {
   createUser,
   getUser,
+  getUserGrowth,
   getTeachers,
   getStudents,
   updateUserDetails,
   getAllUsersDetailsByRole,
   getSingleUserDetails,
   getSingleUserDetailsbyId,
+  changePassword,
 }

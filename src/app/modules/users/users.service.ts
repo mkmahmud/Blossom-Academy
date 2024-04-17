@@ -12,6 +12,7 @@ import { UserDetails, Users } from './users.model'
 import bcrypt from 'bcrypt'
 import { Students } from '../student/student.model'
 import nodemailer from 'nodemailer'
+import config from '../../../config'
 
 // Create User
 const createUser = async (data: IUsers): Promise<IUsers | null | object> => {
@@ -21,6 +22,8 @@ const createUser = async (data: IUsers): Promise<IUsers | null | object> => {
     if (isExist) {
       return { message: 'user already exists' }
     }
+
+    const rawPassword = data.password
 
     const hashedPassword = await bcrypt.hash(data.password, 10)
     // Update password
@@ -91,7 +94,7 @@ const createUser = async (data: IUsers): Promise<IUsers | null | object> => {
           from: 'nurul.dev.mern@gmail.com',
           to: user[0]?.email,
           subject: 'Blossom Account Information',
-          text: `Hello ${user[0]?.fullName} . Your User Id is ${user[0]?.userId}`,
+          text: `Hello ${user[0]?.fullName} . Your User Id is ${user[0]?.userId} . And Your Password is ${rawPassword}. Please Change Your Password`,
         }
 
         userInfoEmail.sendMail(mailOptions, (error, info) => {
@@ -124,6 +127,19 @@ const createUser = async (data: IUsers): Promise<IUsers | null | object> => {
 const getUser = async (id: string): Promise<IUsers | null | object> => {
   try {
     const result = await Users.findById(id).select('-password')
+    return result
+  } catch (err) {
+    console.log(err)
+    return null
+  }
+}
+
+// Get users gorwth
+const getUserGrowth = async (): Promise<IUsers | null | object> => {
+  try {
+    const result = await Users.find({}).select(
+      '-password -fullName -email -userId -role',
+    )
     return result
   } catch (err) {
     console.log(err)
@@ -185,13 +201,60 @@ const getSingleUserDetailsById = async (id: any) => {
   return res
 }
 
+// Change User Password
+type password = {
+  currentPassword: string
+  newPassword: string
+  confirmNewPassword: string
+}
+
+interface UpdatePassword {
+  id: string
+  data: password
+}
+
+const changePassword = async ({
+  id,
+  data,
+}: UpdatePassword): Promise<Partial<IUsers | null | Object>> => {
+  // Check Previous Password
+  const user = await Users.findOne({ userId: id })
+  if (user && typeof data.currentPassword === 'string' && user.password) {
+    const checkPassword = await bcrypt.compare(
+      data.currentPassword,
+      user.password,
+    )
+    if (checkPassword) {
+      const newHashedPassword = await bcrypt.hash(
+        data.confirmNewPassword,
+        Number(config.saltRounds),
+      )
+
+      // Update User Password
+      const result = await Users.findOneAndUpdate(
+        { userId: id },
+        { password: newHashedPassword },
+      )
+
+      // @ts-ignore
+      return result?.userId
+    } else {
+      return 'invalid password'
+    }
+  } else {
+    return null
+  }
+}
+
 export const usersService = {
   createUser,
   getUser,
+  getUserGrowth,
   getTeachers,
   getStudents,
   updateUserDetails,
   getAllUsersDetailsByRole,
   getSingleUserDetails,
   getSingleUserDetailsById,
+  changePassword,
 }
