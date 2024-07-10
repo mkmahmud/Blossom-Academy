@@ -9,6 +9,8 @@ import { PaymentsRoutes } from '../modules/payment/payment.route'
 import { NewsLatterRoutes } from '../modules/newslatter/newslatter.route'
 import { NotificationRoutes } from '../modules/notification/notification.route'
 import { MessengerRoute } from '../modules/messenger/messenger.route'
+import { CoursesScheduleRoutes } from '../modules/courseSchedule/courseSchedule.route'
+import { EventsRoutes } from '../modules/Events/event.route'
 const routes = express.Router()
 
 // Routes
@@ -52,6 +54,14 @@ const Routers = [
   {
     path: '/messenger',
     route: MessengerRoute,
+  },
+  {
+    path: '/course-schedule',
+    route: CoursesScheduleRoutes,
+  },
+  {
+    path: '/events',
+    route: EventsRoutes,
   },
 ]
 
