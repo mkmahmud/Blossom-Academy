@@ -27,6 +27,11 @@ const eventsSchema = new Schema<IEvents>(
       type: String,
       required: true,
     },
+
+    image: {
+      type: String,
+      required: true,
+    },
     speakers: [
       {
         name: { type: String, required: true },

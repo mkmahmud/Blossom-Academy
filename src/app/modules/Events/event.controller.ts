@@ -31,5 +31,19 @@ const getShortEvents = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+// Get Events Details
+const getEventDetails = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id
+  const result = await eventsServices.getEventDetails(id)
+
+  // Send response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Event data Retrived Successfully',
+    data: result,
+  })
+})
+
 // Export Function
-export const eventsController = { createEvent, getShortEvents }
+export const eventsController = { createEvent, getShortEvents, getEventDetails }

@@ -53,6 +53,15 @@ const myContactSchema = new Schema<IMyContact>(
       type: String,
       required: true,
     },
+    lastmessages: {
+      type: String,
+    },
+    totalUnrad: {
+      type: Number,
+    },
+    lastMessageTime: {
+      type: String,
+    },
   },
   {
     timestamps: true,

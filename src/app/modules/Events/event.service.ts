@@ -9,7 +9,15 @@ const createEvent = async (data: IEvents): Promise<IEvents> => {
 
 // Get short events
 const getShortEvents = async () => {
-  const res = await Events.find({}).select('date location name _id')
+  const res = await Events.find({}).select('date location name _id image')
+  return res
+}
+
+// Get Event Details
+const getEventDetails = async (
+  id: string,
+): Promise<Partial<IEvents | null | object>> => {
+  const res = await Events.findById(id)
   return res
 }
 
@@ -17,4 +25,5 @@ const getShortEvents = async () => {
 export const eventsServices = {
   createEvent,
   getShortEvents,
+  getEventDetails,
 }

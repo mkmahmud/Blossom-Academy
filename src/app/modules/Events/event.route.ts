@@ -19,4 +19,7 @@ router.post(
 // Get short Events
 router.get('/', eventsController.getShortEvents)
 
+// Get Event Details
+router.get('/:id', eventsController.getEventDetails)
+
 export const EventsRoutes = router

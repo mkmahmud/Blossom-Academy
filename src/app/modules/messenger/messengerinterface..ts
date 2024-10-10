@@ -15,6 +15,9 @@ export interface IMyContact {
   reciver: string
   reciverName: string
   reciverImg: string
+  lastmessages: string
+  totalUnrad: number
+  lastMessageTime: string
 }
 
 export type MessengerModel = Model<IMessenger>

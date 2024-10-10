@@ -7,6 +7,7 @@ export interface IEvents {
   location: string
   description: string
   agenda: string
+  image: string
   organizer: {
     name: string
     email: string

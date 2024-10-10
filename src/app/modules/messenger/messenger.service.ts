@@ -6,6 +6,25 @@ export const getMessage = (socket: any) => {}
 // Insert Messages
 const InsertMessage = async (data: IMessenger): Promise<IMessenger> => {
   const res = await Messenger.create(data)
+
+  const updatecontact = await MytContact.findOne({
+    sender: data?.reciver,
+    reciver: data?.sender,
+  })
+  await MytContact.findOneAndUpdate(
+    { sender: data?.reciver, reciver: data?.sender },
+    {
+      $set: {
+        lastmessages: data?.message,
+        lastMessageTime: new Date(),
+        totalUnrad: updatecontact?.totalUnrad
+          ? updatecontact?.totalUnrad + 1
+          : 1,
+      },
+    },
+    { new: true },
+  )
+
   return res
 }
 
@@ -20,6 +39,17 @@ const getAllMessages = async (sender: string, reciver: string) => {
     sender: reciver,
     reciver: sender,
   })
+
+  await MytContact.findOneAndUpdate(
+    { sender: sender, reciver: reciver },
+    {
+      $set: {
+        lastmessages: ' ',
+        totalUnrad: 0,
+      },
+    },
+    { new: true },
+  )
 
   const combinedMessages = [...messagesSent, ...messagesReceived]
 
